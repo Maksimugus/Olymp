@@ -2,7 +2,7 @@ package BFS;
 
 import java.util.*;
 
-public class TaskA {
+public class TaskB {
 
     static ArrayList<Integer> d;
     static ArrayList<Integer>[] g;
@@ -10,6 +10,7 @@ public class TaskA {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
+        int x = sc.nextInt();
 
         g = new ArrayList[n+1];
         for(int i=0; i<n+1; i++)
@@ -21,19 +22,14 @@ public class TaskA {
                     g[i].add(j);
                 }
 
-        int a = sc.nextInt();
-        int b = sc.nextInt();
-
-        int start = Math.max(a,b);
-        int end = Math.min(a,b);
-
         d = new ArrayList<>(n+1);
         for (int i=0;i<=n;i++)
             d.add(-1);
 
-        bfs(start);
+        bfs(x);
 
-        System.out.println(d.get(end));
+        for(int i = 1; i<=n; i++)
+            System.out.print(d.get(i) + " ");
     }
 
     static void bfs(int start){
