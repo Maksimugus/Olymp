@@ -8,7 +8,6 @@ public class TaskC {
     static ArrayList<Integer> d;
     static ArrayList<Integer>[] g;
     static int[] pr;
-    static ArrayDeque<Integer> way;
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -16,7 +15,6 @@ public class TaskC {
         int m = sc.nextInt();
 
         pr = new int[n+1];
-        way  = new ArrayDeque<>();
 
         g = new ArrayList[n + 1];
         for (int i = 0; i < n + 1; i++)
@@ -26,7 +24,6 @@ public class TaskC {
             int k = sc.nextInt();
             int p = sc.nextInt();
             g[k].add(p);
-            g[p].add(k);
         }
 
         int s = sc.nextInt();
@@ -36,18 +33,21 @@ public class TaskC {
         for (int i = 0; i <= n; i++)
             d.add(-1);
 
-        bfs(s,t);
+        bfs(s);
 
         System.out.println(d.get(t));
         if(d.get(t)!=-1){
+            ArrayDeque<Integer> way = new ArrayDeque<>();
+            for(int i = t; i!=-1; i = pr[i])
+                way.addFirst(i);
             for (int w : way)
                 System.out.print(w + " ");
-        }else
-            System.out.println("-1");
+        }
     }
 
-    static void bfs(int start, int end) {
+    static void bfs(int start) {
         d.set(start,0);
+        pr[start] = -1;
 
         ArrayDeque<Integer> q = new ArrayDeque<>();
         q.add(start);
@@ -56,17 +56,12 @@ public class TaskC {
             int u = q.peek();
             q.poll();
 
-            for (int v : g[u]) {
+            for (int v : g[u])
                 if (d.get(v) == -1) {
                     d.set(v, d.get(u) + 1);
                     q.add(v);
                     pr[v] = u;
                 }
-            }
         }
-
-        for(int i = end; i!=start; i = pr[i])
-            way.addFirst(i);
-        way.addFirst(start);
     }
 }
